@@ -1,15 +1,29 @@
-'use client';
+import './styles.css'
 
-import '@/index.css';
-import { useData, triggerEvent } from '@uibakery/data';
+import { TextStyleKit } from '@tiptap/extension-text-style'
+import { EditorContent, useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import React from 'react'
+import { MenuBar } from '../components/MenuBar.tsx'
+import { CustomBubbleMenu } from '@/components/BubbleMenu.tsx'
 
-function App() {
+const extensions = [TextStyleKit, StarterKit]
 
+export default () => {
+  const editor = useEditor({
+    extensions,
+    content: `
+<h2>
+  Hi there,
+</h2>
+`,
+  })
+
+      //<MenuBar editor={editor} />
   return (
-    <div className="tiptap-container">
-
-    </div>
-  );
+    <>
+      <CustomBubbleMenu editor={editor} />
+      <EditorContent editor={editor} />
+    </>
+  )
 }
-
-export default App;
