@@ -2,7 +2,7 @@ import { BubbleMenu } from '@tiptap/react/menus'
 import type { Editor } from '@tiptap/core'
 import { useEditorState } from '@tiptap/react'
 import { bubbleMenuStateSelector } from './BubbleMenuState.tsx'
-import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListOl, FaListUl, FaRemoveFormat } from "react-icons/fa";
+import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListOl, FaListUl, FaRemoveFormat, FaEye, FaEyeSlash } from "react-icons/fa";
 import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
@@ -109,6 +109,13 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         
         <button onClick={() => editor.chain().focus().unsetAllMarks().run()} title="Formatierung entfernen">
         	<FaRemoveFormat />
+        </button>
+        <button
+          onClick={() => editor.commands.toggleInvisibleCharacters()}
+          title={editorState.invCharsVisible === true ? "Verstecke unsichtbare Zeichen" : "Zeige unsichtbare Zeichen" }
+          className={editorState.invCharsVisible ? 'is-active' : ''}
+        >
+          {editorState.invCharsVisible && <FaEye /> || <FaEyeSlash />}
         </button>
       </div>
     </BubbleMenu>
