@@ -8,7 +8,7 @@ import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
 import { useEffect } from 'react'
 
-export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
+export function MenuBar({ editor }: { editor: Editor | null }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -19,21 +19,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
   }
 
   return (
-    <BubbleMenu
-      editor={editor}
-      options={{
-        strategy: 'fixed',
-    		placement: 'top',
-    		offset: 8,
-    		flip: {
-      		fallbackPlacements: ['bottom', 'top-start', 'bottom-start'],
-    		},
-    		shift: {
-      		padding: 12,
-    		},
-      }}
-    >
-      <div className="bubble-menu">
+      <div className="menu-bar">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editorState.isBold ? 'is-active' : ''}
@@ -131,6 +117,5 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
           {editorState.invCharsVisible && <FaEye /> || <FaEyeSlash />}
         </button>
       </div>
-    </BubbleMenu>
   )
 }

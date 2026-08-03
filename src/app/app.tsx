@@ -15,6 +15,7 @@ import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
+import { MenuBar } from '../components/MenuBar.tsx'
 import { useData } from '@uibakery/data'
 
 const extensions = [
@@ -35,12 +36,10 @@ export default () => {
 `,
   })
 
-	const data = useData('el', null);
-  console.log('el####', data);
-  
   return (
     <>
       <CustomBubbleMenu editor={editor} />
+    	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>
   )

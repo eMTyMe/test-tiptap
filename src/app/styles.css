@@ -129,7 +129,7 @@
 }
 
 /* Bubble menu */
-.bubble-menu {
+.bubble-menu, .menu-bar {
   background-color: var(--bg-containers);
   border: 1px solid var(--gray-1);
   border-radius: 0.7rem;
@@ -147,7 +147,7 @@
     font-weight: 600;
 
     &:hover {
-      background-color: var(--white-transparent);
+      background-color: var(--gray-1);
     }
 
     &.is-active {
@@ -176,7 +176,7 @@
     border-radius: 5px;
     
     &:hover {
-      background-color: var(--white-transparent);
+      background-color: var(--gray-1);
     }
 
     &.is-active {
