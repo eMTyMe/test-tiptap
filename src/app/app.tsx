@@ -12,10 +12,17 @@ import TextAlign from '@tiptap/extension-text-align'
 import { BulletList, OrderedList, ListItem } from '@tiptap/extension-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { UndoRedo } from '@tiptap/extensions'
-import React from 'react'
+import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
+import React from 'react'
 
-const extensions = [Document, Paragraph, Text, Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor, FontSize, TextAlign, BulletList, OrderedList, ListItem, UndoRedo]
+const extensions = [
+  Document, Paragraph, Text,
+  Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+  FontSize, TextAlign,
+  BulletList, OrderedList, ListItem,
+  UndoRedo, InvisibleCharacters.configure({visible: false})
+]
 
 export default () => {
   const editor = useEditor({
