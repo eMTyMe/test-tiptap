@@ -31,6 +31,9 @@ export function bubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor>) {
     // History
     canUndo: ctx.editor.can().chain().undo().run() ?? false,
     canRedo: ctx.editor.can().chain().redo().run() ?? false,
+
+    // Invisible characters
+    invCharsVisible: ctx.editor.storage.invisibleCharacters.visibility() ?? false,
   }
 }
 
