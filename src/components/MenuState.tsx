@@ -5,7 +5,7 @@ import type { EditorStateSnapshot } from '@tiptap/react'
  * State selector for the BubbleMenu component.
  * Extracts the relevant editor state for rendering menu buttons.
  */
-export function bubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor>) {
+export function menuStateSelector(ctx: EditorStateSnapshot<Editor>) {
   return {
     // Text formatting
     isBold: ctx.editor.isActive('bold') ?? false,
@@ -31,7 +31,10 @@ export function bubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor>) {
     // History
     canUndo: ctx.editor.can().chain().undo().run() ?? false,
     canRedo: ctx.editor.can().chain().redo().run() ?? false,
+
+    // Invisible characters
+    invCharsVisible: ctx.editor.storage.invisibleCharacters.visibility() ?? false,
   }
 }
 
-export type BubbleMenuState = ReturnType<typeof bubbleMenuStateSelector>
+export type MenuState = ReturnType<typeof menuStateSelector>

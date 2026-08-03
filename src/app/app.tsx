@@ -12,10 +12,19 @@ import TextAlign from '@tiptap/extension-text-align'
 import { BulletList, OrderedList, ListItem } from '@tiptap/extension-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { UndoRedo } from '@tiptap/extensions'
+import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
+import { MenuBar } from '../components/MenuBar.tsx'
+import { useData } from '@uibakery/data'
 
-const extensions = [Document, Paragraph, Text, Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor, FontSize, TextAlign, BulletList, OrderedList, ListItem, UndoRedo]
+const extensions = [
+  Document, Paragraph, Text,
+  Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+  FontSize, TextAlign.configure({types: ['paragraph'], defaultAlignment: 'left',}),
+  BulletList, OrderedList, ListItem,
+  UndoRedo, InvisibleCharacters.configure({visible: false})
+]
 
 export default () => {
   const editor = useEditor({
@@ -26,9 +35,11 @@ export default () => {
 </h2>
 `,
   })
+
   return (
     <>
       <CustomBubbleMenu editor={editor} />
+    	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>
   )
