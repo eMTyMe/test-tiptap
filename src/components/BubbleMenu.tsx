@@ -1,126 +1,114 @@
 import { BubbleMenu } from '@tiptap/react/menus'
 import type { Editor } from '@tiptap/core'
 import { useEditorState } from '@tiptap/react'
-import { menuBarStateSelector } from './MenuBarState.tsx'
+import { bubbleMenuStateSelector } from './BubbleMenuState.tsx'
+import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListOl, FaListUl, FaRemoveFormat } from "react-icons/fa";
+import { RiFontColor } from "react-icons/ri";
+import { TbBackground } from "react-icons/tb";
+import { Divider } from './Divider.tsx'
+import { useEffect } from 'react'
 
 export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
 	const editorState = useEditorState({
     editor,
-    selector: menuBarStateSelector,
+    selector: bubbleMenuStateSelector,
   })
 
   if (!editor) {
     return null
   }
-  
+
   return (
     <BubbleMenu editor={editor} options={{placement: 'bottom', offset: 8, flip: true}}>
       <div className="bubble-menu">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
-          disabled={!editorState.canBold}
           className={editorState.isBold ? 'is-active' : ''}
+          title="Fett"
         >
-          Bold
+          <FaBold />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          disabled={!editorState.canItalic}
           className={editorState.isItalic ? 'is-active' : ''}
+          title="Kursiv"
         >
-          Italic
+          <FaItalic />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleStrike().run()}
-          disabled={!editorState.canStrike}
           className={editorState.isStrike ? 'is-active' : ''}
+          title="Durchgestrichen"
         >
-          Strike
+          <FaStrikethrough />
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleCode().run()}
-          disabled={!editorState.canCode}
-          className={editorState.isCode ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          className={editorState.isUnderline ? 'is-active' : ''}
+          title="Unterstrichen"
         >
-          Code
+          <FaUnderline />
         </button>
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>Clear marks</button>
-        <button onClick={() => editor.chain().focus().clearNodes().run()}>Clear nodes</button>
-        <button
-          onClick={() => editor.chain().focus().setParagraph().run()}
-          className={editorState.isParagraph ? 'is-active' : ''}
-        >
-          Paragraph
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          className={editorState.isHeading1 ? 'is-active' : ''}
-        >
-          H1
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editorState.isHeading2 ? 'is-active' : ''}
-        >
-          H2
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editorState.isHeading3 ? 'is-active' : ''}
-        >
-          H3
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-          className={editorState.isHeading4 ? 'is-active' : ''}
-        >
-          H4
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-          className={editorState.isHeading5 ? 'is-active' : ''}
-        >
-          H5
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-          className={editorState.isHeading6 ? 'is-active' : ''}
-        >
-          H6
-        </button>
+        
+        <Divider />
+
+				<div>
+        	<input
+            type="number"
+            id="font-size"
+            min={8}
+            max={64}
+            value={ Number.isNaN(parseInt(editorState.fontSize)) ? 12 : parseInt(editorState.fontSize) }
+            onChange={e => {
+              const value = e.target.value
+              if (!value) return
+              editor.chain().focus().setFontSize(`${value}px`).run()
+            } }
+          />
+        </div>
+        
+        <Divider />
+
+        <div>
+        	<RiFontColor id="color-picker-icon" style={{ color: editorState.color }} />
+					<input type="color" id="color-picker" onChange={e => editor.chain().focus().setColor(e.target.value).run()} title="Textfarbe" />
+        </div>
+        
+        <div>
+        	<TbBackground id="bg-color-picker-icon" style={{ color: editorState.bgColor }} />
+					<input type="color" id="bg-color-picker" onChange={e => editor.chain().focus().setBackgroundColor(e.target.value).run()} title="Hintergrundfarbe" />
+        </div>
+        
+        <Divider />
+        
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editorState.isBulletList ? 'is-active' : ''}
+          title="Unsortierte Aufszählung"
         >
-          Bullet list
+          <FaListUl />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={editorState.isOrderedList ? 'is-active' : ''}
+          title="Sortierte Aufzählung"
         >
-          Ordered list
+          <FaListOl />
         </button>
-        <button
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editorState.isCodeBlock ? 'is-active' : ''}
-        >
-          Code block
+        
+        <Divider />
+        
+        <button onClick={() => editor.chain().focus().undo().run()} title="Rückgängig">
+          <FaUndo />
         </button>
-        <button
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editorState.isBlockquote ? 'is-active' : ''}
-        >
-          Blockquote
+        <button onClick={() => editor.chain().focus().redo().run()} title="Wiederherstellen">
+          <FaRedo />
         </button>
-        <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-          Horizontal rule
-        </button>
-        <button onClick={() => editor.chain().focus().setHardBreak().run()}>Hard break</button>
-        <button onClick={() => editor.chain().focus().undo().run()} disabled={!editorState.canUndo}>
-          Undo
-        </button>
-        <button onClick={() => editor.chain().focus().redo().run()} disabled={!editorState.canRedo}>
-          Redo
+
+				<Divider />
+        
+        <button onClick={() => editor.chain().focus().unsetAllMarks().run()} title="Formatierung entfernen">
+        	<FaRemoveFormat />
         </button>
       </div>
     </BubbleMenu>
