@@ -138,16 +138,17 @@
   padding: 0.2rem;
   color: var(--white);
   gap: 5px;
+  align-items: center;
 
   button {
     background-color: unset;
     padding: 5px;
     border-radius: 5px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 600;
 
     &:hover {
-      background-color: var(--gray-1);
+      background-color: var(--white-transparent);
     }
 
     &.is-active {
@@ -176,7 +177,7 @@
     border-radius: 5px;
     
     &:hover {
-      background-color: var(--gray-1);
+      background-color: var(--white-transparent);
     }
 
     &.is-active {
@@ -215,4 +216,42 @@
     border-radius: 5px;
     padding-inline: 2px;
   }
+
+	details {
+		position: relative;
+    
+		summary {
+      font-size: 0.9rem;
+    	padding: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+
+			&:hover {
+				background-color: var(--white-transparent);
+      }
+      
+      &::marker {
+    		display: none;
+    		content: "";
+      }
+    }
+
+    ul {
+			position: absolute;
+			font-size: 0.9rem;
+			top: calc(100% + 5px);
+			left: 50%;
+			transform: translateX(-50%);
+			color: var(--white);
+    	background-color: var(--bg-containers);
+    	border-radius: 0 0 5px 5px;
+    }
+
+    li {
+      color: inherit;
+      font-size: inherit;
+    }
+    
+  }
+  
 }
