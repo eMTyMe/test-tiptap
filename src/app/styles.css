@@ -21,13 +21,19 @@
     --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .04)
 }
 
+.root {
+  padding: 4px;
+}
+
 /* Basic editor styles */
 .tiptap {
   background-color: var(--bg-inputs);
 	border: 1px solid black;
-  border-radius: 15px;
+  border-radius: 5px;
   padding: 5px 10px;
   box-shadow: var(--shadow);
+  min-height: 45px;
+  overflow-y: auto;
   
   :first-child {
     margin-top: 0;
@@ -131,7 +137,7 @@
 /* Bubble menu */
 .bubble-menu, .menu-bar {
   background-color: var(--bg-containers);
-  border: 1px solid var(--gray-1);
+  outline: 1px solid var(--white);
   border-radius: 0.7rem;
   box-shadow: var(--shadow);
   display: flex;
