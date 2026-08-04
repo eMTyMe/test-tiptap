@@ -2,22 +2,30 @@ import { BubbleMenu } from '@tiptap/react/menus'
 import type { Editor } from '@tiptap/core'
 import { useEditorState } from '@tiptap/react'
 import { menuStateSelector } from './MenuState.tsx'
-import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListOl, FaListUl, FaRemoveFormat, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListOl, FaListUl, FaRemoveFormat, FaEye, FaEyeSlash, FaAlignLeft, FaAlignCenter, FaAlignRight, FaAlignJustify } from "react-icons/fa";
 import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
+function generateRandomString(length) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charsLength = chars.length;
+  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
+	return randomString.join('');
+}
 
 export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
   })
-
+	const [id, setId] = useState(generateRandomString(5));
+  
   if (!editor) {
     return null
   }
-
+  
   return (
     <BubbleMenu
       editor={editor}
@@ -31,9 +39,15 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     		shift: {
       		padding: 12,
     		},
+        onShow: () => {
+          const dropdown = document.querySelector('#alignment-dropdown');
+          if (dropdown) dropdown.removeAttribute('open');
+        },
+        pluginKey: id,
+        element: document.querySelector('bm-' + id)
       }}
     >
-      <div className="bubble-menu">
+      <div className={`bubble-menu bm-${id}`}>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editorState.isBold ? 'is-active' : ''}
@@ -108,6 +122,55 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         >
           <FaListOl />
         </button>
+        
+        <Divider />
+
+				<details id="alignment-dropdown">
+          <summary>{
+            editorState.isLeft && <FaAlignLeft /> ||
+            editorState.isCenter && <FaAlignCenter /> ||
+            editorState.isRight && <FaAlignRight /> ||
+            editorState.isJustify && <FaAlignJustify /> 
+          }</summary>
+          <ul>
+            <li>
+              <button
+              	onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                className={editorState.isLeft ? 'is-active' : ''}
+                title="Linksbündig ausrichten"
+            	>
+                <FaAlignLeft />
+              </button>
+            </li>
+            <li>
+              <button
+              	onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                className={editorState.isCenter ? 'is-active' : ''}
+                title="Zentriert"
+            	>
+                <FaAlignCenter />
+              </button>
+            </li>
+            <li>
+              <button
+              	onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                className={editorState.isRight ? 'is-active' : ''}
+                title="Rechtsbündig ausrichten"
+            	>
+                <FaAlignRight />
+              </button>
+            </li>
+            <li>
+              <button
+              	onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                className={editorState.isJustify ? 'is-active' : ''}
+                title="Blocksatz"
+            	>
+                <FaAlignJustify />
+              </button>
+            </li>
+          </ul>
+        </details>
         
         <Divider />
         

@@ -28,6 +28,12 @@ export function menuStateSelector(ctx: EditorStateSnapshot<Editor>) {
     isBulletList: ctx.editor.isActive('bulletList') ?? false,
     isOrderedList: ctx.editor.isActive('orderedList') ?? false,
 
+		// Alignment
+    isLeft: ctx.editor.isActive({ textAlign: 'left' }) ?? false,
+    isCenter: ctx.editor.isActive({ textAlign: 'center' }) ?? false,
+    isRight: ctx.editor.isActive({ textAlign: 'right' }) ?? false,
+    isJustify: ctx.editor.isActive({ textAlign: 'justify' }) ?? false,
+    
     // History
     canUndo: ctx.editor.can().chain().undo().run() ?? false,
     canRedo: ctx.editor.can().chain().redo().run() ?? false,
