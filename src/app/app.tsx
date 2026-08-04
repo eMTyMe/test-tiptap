@@ -38,9 +38,9 @@ export default () => {
 	const [id, setId] = useState(generateRandomString(5));
 
 	const componentData = useData()
-	console.log(componentData, componentData.content || defaultText)
   
   const defaultText = '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
+  console.log(componentData, componentData.content || defaultText)
   
   const editor = useEditor({
     extensions,
