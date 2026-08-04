@@ -16,29 +16,40 @@ import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
 import { MenuBar } from '../components/MenuBar.tsx'
-import { useData } from '@uibakery/data'
+import { useData, triggerEvent } from '@uibakery/data'
+import { useState } from 'react'
+
+function generateRandomString(length) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charsLength = chars.length;
+  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
+	return randomString.join('');
+}
 
 const extensions = [
   Document, Paragraph, Text,
   Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
-  FontSize, TextAlign.configure({types: ['paragraph'], defaultAlignment: 'left',}),
+  FontSize, TextAlign.configure({types: ['paragraph']}),
   BulletList, OrderedList, ListItem,
   UndoRedo, InvisibleCharacters.configure({visible: false})
 ]
 
 export default () => {
+	const [id, setId] = useState(generateRandomString(5));
+
+	const componentData = useData('content', '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.</p>')
+  
   const editor = useEditor({
     extensions,
-    content: `
-<h2>
-  Hi there,
-</h2>
-`,
+    content: componentData,
+    onUpdate: (editor) => {
+      	triggerEvent({type: 'change', data: editor.getJSON()})
+    },
   })
 
   return (
     <>
-      <CustomBubbleMenu editor={editor} />
+      <CustomBubbleMenu editor={editor} id={id} />
     	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>

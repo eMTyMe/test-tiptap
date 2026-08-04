@@ -6,21 +6,12 @@ import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListO
 import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
-import { useEffect, useState } from 'react'
 
-function generateRandomString(length) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charsLength = chars.length;
-  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
-	return randomString.join('');
-}
-
-export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
+export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: string) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
   })
-	const [id, setId] = useState(generateRandomString(5));
   
   if (!editor) {
     return null
@@ -48,6 +39,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
       }}
     >
       <div className={`bubble-menu bm-${id}`}>
+        <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editorState.isBold ? 'is-active' : ''}
@@ -79,7 +71,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         
         <Divider />
 
-				<div>
+				<div title="Schriftgröße">
         	<input
             type="number"
             id="font-size"
@@ -125,7 +117,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         
         <Divider />
 
-				<details id="alignment-dropdown">
+				<details id="alignment-dropdown" title="Ausrichtung">
           <summary>{
             editorState.isLeft && <FaAlignLeft /> ||
             editorState.isCenter && <FaAlignCenter /> ||
