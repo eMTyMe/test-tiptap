@@ -36,20 +36,22 @@ const extensions = [
 
 export default () => {
 	const [id, setId] = useState(generateRandomString(5));
-
-	const componentData = useData()
-  
-  const defaultText = '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
-  console.log(componentData, componentData.content || defaultText)
   
   const editor = useEditor({
     extensions,
-    content: componentData.content || defaultText,
     onUpdate: ({editor}) => {
       triggerEvent({type: 'change', data: editor.getJSON()})
     },
+    content: '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
   })
 
+	const defaultText = '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
+  const componentData = useData()
+
+  if (componentData.content) {
+   	editor.commands.setContent(componentData.content) 
+  }
+  
   return (
     <>
       <CustomBubbleMenu editor={editor} id={id} />
