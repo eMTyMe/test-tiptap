@@ -37,16 +37,15 @@ const extensions = [
 export default () => {
 	const [id, setId] = useState(generateRandomString(5));
 
-	const componentData = useData('content', '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>')
+	const componentData = useData()
 
-	const test = useData()
+  const defaultText = '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
   
   const editor = useEditor({
     extensions,
-    content: componentData,
+    content: componentData.content || defaultText,
     onUpdate: ({editor}) => {
       triggerEvent({type: 'change', data: editor.getJSON()})
-      console.log(test);
     },
   })
 
