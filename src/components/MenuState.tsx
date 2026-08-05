@@ -14,7 +14,7 @@ export function menuStateSelector(ctx: EditorStateSnapshot<Editor>) {
     isUnderline: ctx.editor.isActive('underline') ?? false,
 
 		// Font size
-    fontSize: ctx.editor.getAttributes('textStyle').fontSize ?? "12px",
+    fontSize: ctx.editor.getAttributes('textStyle').fontSize ?? "14px",
     
     // color
 		color: ctx.editor.getAttributes('textStyle').color,

@@ -6,12 +6,22 @@ import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListO
 import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
+import { useState } from 'react'
 
-export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: string) {
+function generateRandomString(length) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charsLength = chars.length;
+  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
+	return randomString.join('');
+}
+
+export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
   })
+
+	const [pluginKey] = useState(() => generateRandomString(5));
   
   if (!editor) {
     return null
@@ -20,6 +30,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: stri
   return (
     <BubbleMenu
       editor={editor}
+      pluginKey
       options={{
         strategy: 'fixed',
     		placement: 'top',
@@ -34,11 +45,9 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: stri
           const dropdown = document.querySelector('#alignment-dropdown');
           if (dropdown) dropdown.removeAttribute('open');
         },
-        pluginKey: id,
-        element: document.querySelector('bm-' + id)
       }}
     >
-      <div className={`bubble-menu bm-${id}`}>
+      <div className="bubble-menu">
         <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
