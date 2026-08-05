@@ -31,6 +31,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     <BubbleMenu
       editor={editor}
       pluginKey
+      appendTo={() => document.body}
       options={{
         strategy: 'fixed',
     		placement: 'top',
