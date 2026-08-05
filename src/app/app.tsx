@@ -17,7 +17,6 @@ import React from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
 import { MenuBar } from '../components/MenuBar.tsx'
 import { useData, triggerEvent } from '@uibakery/data'
-import { useState } from 'react'
 
 const extensions = [
   Document, Paragraph, Text,

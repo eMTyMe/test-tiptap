@@ -6,7 +6,7 @@ import { FaBold, FaItalic, FaStrikethrough, FaUnderline, FaUndo, FaRedo, FaListO
 import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 function generateRandomString(length) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
