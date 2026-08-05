@@ -19,13 +19,6 @@ import { MenuBar } from '../components/MenuBar.tsx'
 import { useData, triggerEvent } from '@uibakery/data'
 import { useState } from 'react'
 
-function generateRandomString(length) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charsLength = chars.length;
-  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
-	return randomString.join('');
-}
-
 const extensions = [
   Document, Paragraph, Text,
   Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
@@ -35,8 +28,6 @@ const extensions = [
 ]
 
 export default () => {
-	const [menuId, setMenuId] = useState(generateRandomString(5));
-  
   const componentData = useData()
   
   const editor = useEditor({
@@ -54,7 +45,7 @@ export default () => {
   
   return (
     <>
-      <CustomBubbleMenu editor={editor} menuId={menuId} />
+      <CustomBubbleMenu editor={editor} />
     	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>
