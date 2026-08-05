@@ -22,6 +22,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
   })
 
 	const [pluginKey] = useState(() => generateRandomString(5));
+	const updatedForCurrentOpen = useRef(false)
   
   if (!editor) {
     return null
@@ -31,7 +32,6 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     <BubbleMenu
       editor={editor}
       pluginKey
-      appendTo={() => document.body}
       options={{
         strategy: 'fixed',
     		placement: 'top',
@@ -43,8 +43,20 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
       		padding: 12,
     		},
         onShow: () => {
-          const dropdown = document.querySelector('#alignment-dropdown');
-          if (dropdown) dropdown.removeAttribute('open');
+          const dropdown = document.querySelector('#alignment-dropdown')
+          if (dropdown) dropdown.removeAttribute('open')
+          
+          if (updatedForCurrentOpen.current) return
+          updatedForCurrentOpen.current = true
+
+          requestAnimationFrame(() => {
+            if (!editor.isDestroyed) {
+              editor.commands.setMeta(
+                pluginKey,
+                'updatePosition',
+              )
+            }
+          })
         },
       }}
     >
@@ -129,10 +141,10 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
 
 				<details id="alignment-dropdown" title="Ausrichtung">
           <summary>{
-            editorState.isLeft && <FaAlignLeft /> ||
             editorState.isCenter && <FaAlignCenter /> ||
             editorState.isRight && <FaAlignRight /> ||
-            editorState.isJustify && <FaAlignJustify /> 
+            editorState.isJustify && <FaAlignJustify /> ||
+            <FaAlignLeft />
           }</summary>
           <ul>
             <li>
