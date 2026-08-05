@@ -54,7 +54,7 @@ export default () => {
   
   return (
     <>
-      <CustomBubbleMenu editor={editor} id={menuId} />
+      <CustomBubbleMenu editor={editor} menuId={menuId} />
     	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>

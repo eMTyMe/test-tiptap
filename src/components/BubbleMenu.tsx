@@ -7,7 +7,7 @@ import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
 
-export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: string) {
+export function CustomBubbleMenu({ editor, menuId }: { editor: Editor | null, menuId: string }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -16,6 +16,8 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: stri
   if (!editor) {
     return null
   }
+
+	console.log(menuId);
   
   return (
     <BubbleMenu
@@ -34,11 +36,11 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }, id: stri
           const dropdown = document.querySelector('#alignment-dropdown');
           if (dropdown) dropdown.removeAttribute('open');
         },
-        pluginKey: id,
-        element: document.querySelector('bm-' + id)
+        pluginKey: menuId,
+        element: document.querySelector('bm-' + menuId)
       }}
     >
-      <div className={`bubble-menu bm-${id}`}>
+      <div className={`bubble-menu bm-${menuId}`}>
         <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
