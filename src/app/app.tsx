@@ -13,7 +13,7 @@ import { BulletList, OrderedList, ListItem } from '@tiptap/extension-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
 import { MenuBar } from '../components/MenuBar.tsx'
 import { useData, triggerEvent } from '@uibakery/data'
@@ -39,6 +39,18 @@ export default () => {
     content: '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
   })
 
+	useEffect(() => {
+    console.log(`componentData changed`, componentData);
+  }, [componentData])
+  
+  useEffect(() => {
+    if (!editor) {
+      return undefined
+    }
+
+    if (typeof componentData.editable === 'boolean')
+    	editor.setEditable(componentData.editable)
+  }, [editor, componentData])
 
   if (componentData.content) {
    	editor.commands.setContent(componentData.content) 
