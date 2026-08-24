@@ -21,8 +21,14 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     selector: menuStateSelector,
   })
 
-	const [pluginKey] = useState(() => generateRandomString(5));
-	const updatedForCurrentOpen = useRef(false)
+  const pluginKey = useRef(null)
+  if (pluginKey.current === null) {
+    pluginKey.current = generateRandomString(5)
+  }
+  
+	/* const updatedForCurrentOpen = useRef(false)
+
+	console.log(pluginKey.current); */
   
   if (!editor) {
     return null
@@ -31,7 +37,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
   return (
     <BubbleMenu
       editor={editor}
-      pluginKey
+   		pluginKey={pluginKey.current}   
       options={{
         strategy: 'fixed',
     		placement: 'top',
@@ -45,18 +51,6 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         onShow: () => {
           const dropdown = document.querySelector('#alignment-dropdown')
           if (dropdown) dropdown.removeAttribute('open')
-          
-          if (updatedForCurrentOpen.current) return
-          updatedForCurrentOpen.current = true
-
-          requestAnimationFrame(() => {
-            if (!editor.isDestroyed) {
-              editor.commands.setMeta(
-                pluginKey,
-                'updatePosition',
-              )
-            }
-          })
         },
       }}
     >
