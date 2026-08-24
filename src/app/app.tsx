@@ -27,12 +27,14 @@ const extensions = [
 ]
 
 export default () => {
-  const componentData = useData()
+  let componentData = useData() || {};
   
   const editor = useEditor({
     extensions,
+    editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
     onUpdate: ({editor}) => {
-      triggerEvent({type: 'change', data: editor.getJSON(), componentId: componentData.id})
+      console.log(componentData);
+      triggerEvent({type: 'change', data: editor.getJSON(), componentId: componentData?.id})
     },
     content: '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
   })
@@ -45,7 +47,6 @@ export default () => {
   return (
     <>
       <CustomBubbleMenu editor={editor} />
-    	{/* <MenuBar editor={editor} /> */}
       <EditorContent editor={editor} />
     </>
   )
