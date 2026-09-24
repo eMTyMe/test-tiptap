@@ -42,6 +42,7 @@ export default () => {
 	useEffect(() => {
     console.log(`componentData changed`, componentData);
   }, [componentData])
+	console.log("hereeeeeA");
   
   useEffect(() => {
     if (!editor) {
