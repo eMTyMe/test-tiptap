@@ -27,6 +27,7 @@ const extensions = [
 ]
 
 export default () => {
+  console.log('start component')
   let componentData = useData() || {};
   
   const editor = useEditor({
@@ -42,7 +43,6 @@ export default () => {
 	useEffect(() => {
     console.log(`componentData changed`, componentData);
   }, [componentData])
-	console.log("hereeeeeA");
   
   useEffect(() => {
     if (!editor) {
