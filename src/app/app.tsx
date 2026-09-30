@@ -37,6 +37,15 @@ export default () => {
     onUpdate: ({editor}) => {
       triggerEvent({type: 'change', data: editor.getJSON(), componentId: id})
     },
+    onFocus({ editor, event }) {
+    	triggerEvent({type: 'focus', componentId: id})
+  	},
+  	onBlur({ editor, event }) {
+    	triggerEvent({type: 'blur', componentId: id})
+  	},
+    onTransaction({ editor, transaction }) {
+    	console.log("onTransaction" , transaction)
+  	},
     content: componentData.content || ""
   })
   
