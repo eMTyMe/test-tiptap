@@ -29,28 +29,29 @@ export default () => {
   console.log('start component')
   let componentData = useData() || {};
   
+	const id = componentData.id;
+  
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
     onUpdate: ({editor}) => {
-      console.log(componentData);
-      triggerEvent({type: 'change', data: editor.getJSON(), componentId: componentData?.id})
+      triggerEvent({type: 'change', data: editor.getJSON(), componentId: id})
     },
-    content: '<p style="text-align: left;">Lorem <strong>ipsum</strong> dolor <em><strong>sit</strong></em> amet <span style="color: rgb(255,0,0);">consectetur adipiscing</span> elit, odio interdum elementum luctus donec taciti, dui iaculis rutrum nostra quis primis.#</p>'
+    content: componentData.content || ""
   })
-
-	useEffect(() => {
-    console.log(`componentData changed`, componentData);
-  }, [componentData])
   
   useEffect(() => {
-    console.log("2nd useeffect");
+    console.log("useEffect", componentData)
     if (!editor) {
       return undefined
     }
-
+    
     if (typeof componentData.editable === 'boolean')
     	editor.setEditable(componentData.editable)
+
+    if (typeof componentData.content === 'string') {
+    	editor.commands.setContent(componentData.content)   
+    }
   }, [editor, componentData])
 
   if (componentData.content) {
@@ -59,7 +60,7 @@ export default () => {
   
   return (
     <>
-      <CustomBubbleMenu editor={editor} />
+      {componentData.editable === false || <CustomBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />
     </>
   )

@@ -26,10 +26,6 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     pluginKey.current = generateRandomString(5)
   }
   
-	/* const updatedForCurrentOpen = useRef(false)
-
-	console.log(pluginKey.current); */
-  
   if (!editor) {
     return null
   }
