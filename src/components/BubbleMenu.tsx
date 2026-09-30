@@ -33,13 +33,15 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
   if (!editor) {
     return null
   }
+
+	const updatedForCurrentOpen = useRef(false);
   
   return (
     <BubbleMenu
       editor={editor}
    		pluginKey={pluginKey.current}   
       options={{
-        strategy: 'absolute',
+        strategy: 'fixed',
     		placement: 'top',
     		offset: 8,
     		flip: {
@@ -51,6 +53,20 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         onShow: () => {
           const dropdown = document.querySelector('#alignment-dropdown')
           if (dropdown) dropdown.removeAttribute('open')
+
+          // force position update on first show to fix wrong position on initialization
+          if (updatedForCurrentOpen.current) return
+          
+          updatedForCurrentOpen.current = true
+
+          requestAnimationFrame(() => {
+            if (!editor.isDestroyed) {
+              editor.commands.setMeta(
+                pluginKey.current,
+                'updatePosition',
+              )
+            }
+          })
         },
       }}
     >
