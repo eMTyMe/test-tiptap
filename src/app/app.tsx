@@ -15,7 +15,6 @@ import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React, { useEffect } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
-import { MenuBar } from '../components/MenuBar.tsx'
 import { useData, triggerEvent } from '@uibakery/data'
 
 const extensions = [
@@ -45,6 +44,7 @@ export default () => {
   }, [componentData])
   
   useEffect(() => {
+    console.log("2nd useeffect");
     if (!editor) {
       return undefined
     }
