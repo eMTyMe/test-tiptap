@@ -25,6 +25,10 @@
   padding: 4px;
 }
 
+div:has(>.bubble-menu) {
+  position: fixed;
+}
+
 /* Basic editor styles */
 .tiptap {
   background-color: var(--bg-inputs);
