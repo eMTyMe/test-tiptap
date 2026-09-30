@@ -39,7 +39,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
       editor={editor}
    		pluginKey={pluginKey.current}   
       options={{
-        strategy: 'fixed',
+        strategy: 'absolute',
     		placement: 'top',
     		offset: 8,
     		flip: {
