@@ -41,13 +41,16 @@ export default () => {
 	if (pluginKey.current === null) {
     pluginKey.current = generateRandomString(5)
   }
+
+	function triggerChangeEvent({editor}) {
+    console.log('trigger change event')
+    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
+  }
   
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
-    onUpdate: ({ editor }) => {
-      triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
-    },
+    onUpdate: triggerChangeEvent,
     onFocus: ({ editor, event }) => {
     	triggerEvent({type: 'focus', componentId: id})
   	},
@@ -76,7 +79,7 @@ export default () => {
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} triggerChangeEvent={triggerChangeEvent} />}
       <EditorContent editor={editor} />
     </>
   )
