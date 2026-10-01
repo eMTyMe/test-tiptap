@@ -7,6 +7,7 @@ import { RiFontColor } from "react-icons/ri";
 import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
 import { useState, useRef } from 'react'
+import { triggerEvent } from '@uibakery/data'
 
 export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChangeEvent }: { editor: Editor | null, pluginKey: String, componentId: String, triggerChangeEvent: Function }) {
 	const editorState = useEditorState({
@@ -19,6 +20,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
   }
 
 	const updatedForCurrentOpen = useRef(false);
+
+	triggerEvent({type: 'menu ready'})
   
   return (
     <BubbleMenu
