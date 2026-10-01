@@ -15,7 +15,7 @@ function generateRandomString(length) {
 	return randomString.join('');
 }
 
-export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
+export function CustomBubbleMenu({ editor, onUpdate }: { editor: Editor | null, onUpdate: Function }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -36,8 +36,12 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
     <BubbleMenu
       editor={editor}
    		pluginKey={pluginKey.current}   
+      appendTo={() => {
+        console.log("appending to", document.body);
+      	return document.body
+      }}
       options={{
-        strategy: 'fixed',
+        strategy: 'absolute',
     		placement: 'top',
     		offset: 8,
     		flip: {
@@ -69,28 +73,40 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
       <div className="bubble-menu">
         <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={() => {
+            editor.chain().focus().toggleBold().run()
+            onUpdate(editor)
+          }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
         >
           <FaBold />
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={() => {
+            editor.chain().focus().toggleItalic().run()
+            onUpdate(editor)
+          }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
         >
           <FaItalic />
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={() => {
+            editor.chain().focus().toggleStrike().run()
+            onUpdate(editor)
+          }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
         >
           <FaStrikethrough />
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          onClick={() => {
+            editor.chain().focus().toggleUnderline().run()
+            onUpdate(editor)
+          }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
         >
@@ -110,6 +126,7 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
               const value = e.target.value
               if (!value) return
               editor.chain().focus().setFontSize(`${value}px`).run()
+              onUpdate(editor)
             } }
           />
         </div>
@@ -118,25 +135,47 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
 
         <div>
         	<RiFontColor id="color-picker-icon" style={{ color: editorState.color }} />
-					<input type="color" id="color-picker" onChange={e => editor.chain().focus().setColor(e.target.value).run()} title="Textfarbe" />
+					<input
+            type="color"
+            id="color-picker"
+            onChange={e => {
+              editor.chain().focus().setColor(e.target.value).run()
+              onUpdate(editor)
+            }}
+            title="Textfarbe"
+          />
         </div>
         
         <div>
         	<TbBackground id="bg-color-picker-icon" style={{ color: editorState.bgColor }} />
-					<input type="color" id="bg-color-picker" onChange={e => editor.chain().focus().setBackgroundColor(e.target.value).run()} title="Hintergrundfarbe" />
+					<input
+            type="color"
+            id="bg-color-picker"
+            onChange={e => {
+              editor.chain().focus().setBackgroundColor(e.target.value).run()
+              onUpdate(editor)
+            }}
+            title="Hintergrundfarbe"
+          />
         </div>
         
         <Divider />
         
         <button
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          onClick={() => {
+            editor.chain().focus().toggleBulletList().run()
+            onUpdate(editor)
+          }}
           className={editorState.isBulletList ? 'is-active' : ''}
           title="Unsortierte Aufszählung"
         >
           <FaListUl />
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          onClick={() => {
+            editor.chain().focus().toggleOrderedList().run()
+            onUpdate(editor)
+          }}
           className={editorState.isOrderedList ? 'is-active' : ''}
           title="Sortierte Aufzählung"
         >
@@ -155,7 +194,10 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
           <ul>
             <li>
               <button
-              	onClick={() => editor.chain().focus().setTextAlign('left').run()}
+              	onClick={() => {
+                  editor.chain().focus().setTextAlign('left').run()
+                  onUpdate(editor)
+                }}
                 className={editorState.isLeft ? 'is-active' : ''}
                 title="Linksbündig ausrichten"
             	>
@@ -164,7 +206,10 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
             </li>
             <li>
               <button
-              	onClick={() => editor.chain().focus().setTextAlign('center').run()}
+              	onClick={() => {
+                  editor.chain().focus().setTextAlign('center').run()
+                  onUpdate(editor)
+                }}
                 className={editorState.isCenter ? 'is-active' : ''}
                 title="Zentriert"
             	>
@@ -173,7 +218,10 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
             </li>
             <li>
               <button
-              	onClick={() => editor.chain().focus().setTextAlign('right').run()}
+              	onClick={() => {
+                  editor.chain().focus().setTextAlign('right').run()
+                  onUpdate(editor)
+                }}
                 className={editorState.isRight ? 'is-active' : ''}
                 title="Rechtsbündig ausrichten"
             	>
@@ -182,7 +230,10 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
             </li>
             <li>
               <button
-              	onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+              	onClick={() => {
+                  editor.chain().focus().setTextAlign('justify').run()
+                  onUpdate(editor)
+                }}
                 className={editorState.isJustify ? 'is-active' : ''}
                 title="Blocksatz"
             	>
@@ -194,16 +245,34 @@ export function CustomBubbleMenu({ editor }: { editor: Editor | null }) {
         
         <Divider />
         
-        <button onClick={() => editor.chain().focus().undo().run()} title="Rückgängig">
+        <button
+          onClick={() => {
+            editor.chain().focus().undo().run()
+            onUpdate(editor)
+          }}
+          title="Rückgängig"
+        >
           <FaUndo />
         </button>
-        <button onClick={() => editor.chain().focus().redo().run()} title="Wiederherstellen">
+        <button
+          onClick={() => {
+            editor.chain().focus().redo().run()
+            onUpdate(editor)
+          }}
+          title="Wiederherstellen"
+        >
           <FaRedo />
         </button>
 
 				<Divider />
         
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()} title="Formatierung entfernen">
+        <button
+          onClick={() => {
+            editor.chain().focus().unsetAllMarks().run()
+            onUpdate(editor)
+          }}
+          title="Formatierung entfernen"
+        >
         	<FaRemoveFormat />
         </button>
         <button

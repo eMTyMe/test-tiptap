@@ -30,23 +30,22 @@ export default () => {
   let componentData = useData() || {};
   
 	const id = componentData.id;
+
+	function onContentOrStyleUpdate({editor}) {
+    triggerEvent({type: 'change', data: editor.getJSON(), componentId: id})
+  }
   
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
-    onUpdate: ({editor}) => {
-      triggerEvent({type: 'change', data: editor.getJSON(), componentId: id})
-    },
+    onUpdate: onContentOrStyleUpdate,
     onFocus({ editor, event }) {
     	triggerEvent({type: 'focus', componentId: id})
   	},
   	onBlur({ editor, event }) {
     	triggerEvent({type: 'blur', componentId: id})
   	},
-    onTransaction({ editor, transaction }) {
-    	console.log("onTransaction" , transaction)
-  	},
-    content: componentData.content || ""
+    content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
   
   useEffect(() => {
@@ -69,7 +68,7 @@ export default () => {
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} />}
+      {componentData.editable === false || <CustomBubbleMenu editor={editor} onUpdate={onContentOrStyleUpdate} />}
       <EditorContent editor={editor} />
     </>
   )
