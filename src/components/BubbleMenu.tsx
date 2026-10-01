@@ -26,7 +26,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
     console.log('json', editor.getJSON())
     console.log('text', editor.getText())
     console.log('componentId', componentId)
-    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId})
+    triggerEvent({type: 'change', componentId})
     console.log('SHOULD HAVE TRIGGERED')
   }
   
