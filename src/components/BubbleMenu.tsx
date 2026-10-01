@@ -109,7 +109,6 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             min={8}
             max={64}
             value={ Number.isNaN(parseInt(editorState.fontSize)) ? 12 : parseInt(editorState.fontSize) }
-            onMouseDown={(event) => event.preventDefault()}
             onChange={e => {
               const value = e.target.value
               if (!value) return
@@ -126,7 +125,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             type="color"
             id="color-picker"
             onChange={e => {
-              editor.chain().focus().setColor(e.target.value).run()
+              editor.chain().focus().run()
+              editor.chain().setColor(e.target.value).run()
             }}
             title="Textfarbe"
           />
@@ -138,7 +138,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             type="color"
             id="bg-color-picker"
             onChange={e => {
-              editor.chain().focus().setBackgroundColor(e.target.value).run()
+              editor.chain().focus().run()
+              editor.chain().setBackgroundColor(e.target.value).run()
             }}
             title="Hintergrundfarbe"
           />
