@@ -51,6 +51,15 @@ export default () => {
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
     onUpdate: bla,
+    onTransaction: ({ editor, transaction }) => {
+  		console.log('Editor transaction', {
+    		docChanged: transaction.docChanged,
+    		storedMarksSet: transaction.storedMarksSet,
+    		preventUpdate: transaction.getMeta('preventUpdate'),
+    		selectionEmpty: editor.state.selection.empty,
+    		json: editor.getJSON(),
+  		})
+		},
     onFocus: ({ editor, event }) => {
     	triggerEvent({type: 'focus', componentId: id})
   	},

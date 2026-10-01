@@ -56,7 +56,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
           onClick={() => {
-            editor.chain().focus().toggleBold().run()
+            const boldExecuted = editor.chain().focus().toggleBold().run()
+            console.log('Bold command executed', boldExecuted)
             triggerChangeEvent()
             bla({editor})
           }}
