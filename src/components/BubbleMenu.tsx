@@ -47,7 +47,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleBold().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -57,7 +57,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleItalic().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
@@ -67,7 +67,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleStrike().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
@@ -77,7 +77,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleUnderline().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
@@ -98,7 +98,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
               const value = e.target.value
               if (!value) return
               editor.chain().focus().setFontSize(`${value}px`).run()
-              onUpdate(editor)
+              onUpdate({editor})
             } }
           />
         </div>
@@ -112,7 +112,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
             id="color-picker"
             onChange={e => {
               editor.chain().focus().setColor(e.target.value).run()
-              onUpdate(editor)
+              onUpdate({editor})
             }}
             title="Textfarbe"
           />
@@ -125,7 +125,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
             id="bg-color-picker"
             onChange={e => {
               editor.chain().focus().setBackgroundColor(e.target.value).run()
-              onUpdate(editor)
+              onUpdate({editor})
             }}
             title="Hintergrundfarbe"
           />
@@ -136,7 +136,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleBulletList().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isBulletList ? 'is-active' : ''}
           title="Unsortierte Aufszählung"
@@ -146,7 +146,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().toggleOrderedList().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           className={editorState.isOrderedList ? 'is-active' : ''}
           title="Sortierte Aufzählung"
@@ -168,7 +168,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('left').run()
-                  onUpdate(editor)
+                  onUpdate({editor})
                 }}
                 className={editorState.isLeft ? 'is-active' : ''}
                 title="Linksbündig ausrichten"
@@ -180,7 +180,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('center').run()
-                  onUpdate(editor)
+                  onUpdate({editor})
                 }}
                 className={editorState.isCenter ? 'is-active' : ''}
                 title="Zentriert"
@@ -192,7 +192,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('right').run()
-                  onUpdate(editor)
+                  onUpdate({editor})
                 }}
                 className={editorState.isRight ? 'is-active' : ''}
                 title="Rechtsbündig ausrichten"
@@ -204,7 +204,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('justify').run()
-                  onUpdate(editor)
+                  onUpdate({editor})
                 }}
                 className={editorState.isJustify ? 'is-active' : ''}
                 title="Blocksatz"
@@ -220,7 +220,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().undo().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           title="Rückgängig"
         >
@@ -229,7 +229,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().redo().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           title="Wiederherstellen"
         >
@@ -241,7 +241,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
         <button
           onClick={() => {
             editor.chain().focus().unsetAllMarks().run()
-            onUpdate(editor)
+            onUpdate({editor})
           }}
           title="Formatierung entfernen"
         >

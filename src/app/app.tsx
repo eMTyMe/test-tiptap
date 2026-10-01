@@ -43,7 +43,7 @@ export default () => {
   }
   
 	function onContentOrStyleUpdate({editor}) {
-    triggerEvent({type: 'change', data: editor.getJSON(), componentId: id})
+    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
   }
   
   const editor = useEditor({
@@ -58,13 +58,25 @@ export default () => {
   	},
     content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
-  
+
+  /**
+   * Hide the menu programmatically.
+   * try-catch is used because it will throw errors when editing and reloading the app, thus attaching the listener multiple times since its not the page being reloaded, just the "app"
+   */
+	function hideMenu() {
+    try {
+    	editor.commands.setMeta(pluginKey, 'hide')
+    } catch(e) {
+      console.log('technically an error', e);
+    }
+  }
+
   useEffect(() => {
     if (!editor) {
       return undefined
     }
     
-    if (typeof componentData.editable === 'boolean')
+    if (typeof componentData.editable === 'boolean') 
     	editor.setEditable(componentData.editable)
 
     if (typeof componentData.content === 'string') {
@@ -76,13 +88,14 @@ export default () => {
    	editor.commands.setContent(componentData.content) 
   }
 
-	window.addEventListener('mouseup', e => {
-    console.log('mouseup');
+	function onMouseUp(e) {
     if (!e.target.closest('.bubble-menu, .tiptap')) {
-      console.log('close menu');
-      editor.commands.setMeta(pluginKey, 'hide')
+      hideMenu()
     }
-  });
+  }
+  
+	window.addEventListener('mouseup', onMouseUp);
+  window.addEventListener('beforeunload', () => window.removeEventListener('mouseup', onMouseUp))
   
   return (
     <>
