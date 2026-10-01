@@ -79,7 +79,7 @@ export default () => {
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} bla={bla} />}
+      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
