@@ -9,7 +9,7 @@ import { Divider } from './Divider.tsx'
 import { useState, useRef } from 'react'
 import { triggerEvent } from '@uibakery/data'
 
-export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: Editor | null, pluginKey: String, componentId: String }) {
+export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { editor: Editor | null, pluginKey: String, componentId: String, bla: Function }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -58,6 +58,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           onClick={() => {
             editor.chain().focus().toggleBold().run()
             triggerChangeEvent()
+            bla({editor})
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -68,6 +69,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           onClick={() => {
             editor.chain().focus().toggleItalic().run()
             triggerChangeEvent()
+            bla({editor})
           }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
@@ -78,6 +80,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           onClick={() => {
             editor.chain().focus().toggleStrike().run()
             triggerChangeEvent()
+            bla({editor})
           }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
@@ -88,6 +91,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           onClick={() => {
             editor.chain().focus().toggleUnderline().run()
             triggerChangeEvent()
+            bla({editor})
           }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
@@ -109,6 +113,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
               if (!value) return
               editor.chain().focus().setFontSize(`${value}px`).run()
               triggerChangeEvent()
+              bla({editor})
             } }
           />
         </div>
@@ -123,6 +128,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
             onChange={e => {
               editor.chain().focus().setColor(e.target.value).run()
               triggerChangeEvent()
+              bla({editor})
             }}
             title="Textfarbe"
           />
