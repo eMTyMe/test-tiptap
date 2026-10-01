@@ -24,10 +24,7 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
     <BubbleMenu
       editor={editor}
    		pluginKey={pluginKey.current}   
-      appendTo={() => {
-        console.log("appending to", document.body);
-      	return document.body
-      }}
+      appendTo={document.body}
       options={{
         strategy: 'absolute',
     		placement: 'top',
@@ -39,22 +36,9 @@ export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Edit
       		padding: 12,
     		},
         onShow: () => {
+          // close alignment dropdown if its still open from the last time the menu was shown
           const dropdown = document.querySelector('#alignment-dropdown')
           if (dropdown) dropdown.removeAttribute('open')
-
-          // force position update on first show to fix wrong position on initialization
-          /*if (updatedForCurrentOpen.current) return
-          
-          updatedForCurrentOpen.current = true
-
-          requestAnimationFrame(() => {
-            if (!editor.isDestroyed) {
-              editor.commands.setMeta(
-                pluginKey.current,
-                'updatePosition',
-              )
-            }
-          })*/
         },
       }}
     >
