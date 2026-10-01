@@ -55,7 +55,7 @@ export function CustomBubbleMenu({ editor, onUpdate }: { editor: Editor | null, 
           if (dropdown) dropdown.removeAttribute('open')
 
           // force position update on first show to fix wrong position on initialization
-          if (updatedForCurrentOpen.current) return
+          /*if (updatedForCurrentOpen.current) return
           
           updatedForCurrentOpen.current = true
 
@@ -66,7 +66,7 @@ export function CustomBubbleMenu({ editor, onUpdate }: { editor: Editor | null, 
                 'updatePosition',
               )
             }
-          })
+          })*/
         },
       }}
     >
