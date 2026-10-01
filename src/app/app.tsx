@@ -45,13 +45,13 @@ export default () => {
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
-    onUpdate({ editor }) {
+    onUpdate: ({ editor }) => {
       triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
     },
-    onFocus({ editor, event }) {
+    onFocus: ({ editor, event }) => {
     	triggerEvent({type: 'focus', componentId: id})
   	},
-  	onBlur({ editor, event }) {
+  	onBlur: ({ editor, event }) => {
     	triggerEvent({type: 'blur', componentId: id})
   	},
     content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'

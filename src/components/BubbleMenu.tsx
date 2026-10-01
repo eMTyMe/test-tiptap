@@ -23,7 +23,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
 
 	function onAnyChange() {
     console.log('anychange trigger event')
-    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
+    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId})
   }
   
   return (
