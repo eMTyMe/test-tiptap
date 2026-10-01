@@ -61,14 +61,9 @@ export default () => {
 
   /**
    * Hide the menu programmatically.
-   * try-catch is used because it will throw errors when editing and reloading the app, thus attaching the listener multiple times since its not the page being reloaded, just the "app"
    */
 	function hideMenu() {
-    try {
-    	editor.commands.setMeta(pluginKey, 'hide')
-    } catch(e) {
-      console.log('technically an error', e);
-    }
+    editor.commands.setMeta(pluginKey, 'hide')
   }
 
   useEffect(() => {
@@ -89,6 +84,7 @@ export default () => {
   }
 
 	function onMouseUp(e) {
+    if (!editor?.commandManager) return;
     if (!e.target.closest('.bubble-menu, .tiptap')) {
       hideMenu()
     }
