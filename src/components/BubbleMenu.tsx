@@ -147,6 +147,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         
         <button
           type="button"
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             editor.chain().focus().toggleBulletList().run()
           }}
@@ -179,6 +180,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             <li>
               <button
                 type="button"
+                onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
                   editor.chain().focus().setTextAlign('left').run()
                 }}
@@ -191,6 +193,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             <li>
               <button
                 type="button"
+                onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
                   editor.chain().focus().setTextAlign('center').run()
                 }}
@@ -203,6 +206,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             <li>
               <button
                 type="button"
+                onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
                   editor.chain().focus().setTextAlign('right').run()
                 }}
@@ -215,6 +219,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             <li>
               <button
                 type="button"
+                onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
                   editor.chain().focus().setTextAlign('justify').run()
                 }}
@@ -231,6 +236,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         
         <button
           type="button"
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             editor.chain().focus().undo().run()
           }}
@@ -240,6 +246,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         </button>
         <button
           type="button"
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             editor.chain().focus().redo().run()
           }}
@@ -252,6 +259,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         
         <button
           type="button"
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             editor.chain().focus().unsetAllMarks().run()
           }}
