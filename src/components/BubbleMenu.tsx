@@ -9,7 +9,7 @@ import { Divider } from './Divider.tsx'
 import { useState, useRef } from 'react'
 import { triggerEvent } from '@uibakery/data'
 
-export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { editor: Editor | null, pluginKey: String, componentId: String, bla: Function }) {
+export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: Editor | null, pluginKey: String, componentId: String }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -20,15 +20,6 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
   }
 
 	const updatedForCurrentOpen = useRef(false)
-
-  // trigger change event when formatting changes
-	function triggerChangeEvent() {
-    console.log('json', editor.getJSON())
-    console.log('text', editor.getText())
-    console.log('componentId', componentId)
-    triggerEvent({type: 'change'})
-    console.log('SHOULD HAVE TRIGGERED')
-  }
   
   return (
     <BubbleMenu
@@ -58,7 +49,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().toggleBold().run()
+            editor.chain().toggleBold().run()
+            editor.focus()
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -69,7 +61,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().toggleItalic().run()
+            editor.chain().toggleItalic().run()
           }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
@@ -80,7 +72,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().toggleStrike().run()
+            editor.chain().toggleStrike().run()
           }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
@@ -91,7 +83,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().toggleUnderline().run()
+            editor.chain().toggleUnderline().run()
           }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
@@ -149,7 +141,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().toggleBulletList().run()
+            editor.chain().toggleBulletList().run()
           }}
           className={editorState.isBulletList ? 'is-active' : ''}
           title="Unsortierte Aufszählung"
@@ -159,7 +151,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         <button
           type="button"
           onClick={() => {
-            editor.chain().focus().toggleOrderedList().run()
+            editor.chain().toggleOrderedList().run()
           }}
           className={editorState.isOrderedList ? 'is-active' : ''}
           title="Sortierte Aufzählung"
@@ -182,7 +174,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().focus().setTextAlign('left').run()
+                  editor.chain().setTextAlign('left').run()
                 }}
                 className={editorState.isLeft ? 'is-active' : ''}
                 title="Linksbündig ausrichten"
@@ -195,7 +187,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().focus().setTextAlign('center').run()
+                  editor.chain().setTextAlign('center').run()
                 }}
                 className={editorState.isCenter ? 'is-active' : ''}
                 title="Zentriert"
@@ -208,7 +200,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().focus().setTextAlign('right').run()
+                  editor.chain().setTextAlign('right').run()
                 }}
                 className={editorState.isRight ? 'is-active' : ''}
                 title="Rechtsbündig ausrichten"
@@ -221,7 +213,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().focus().setTextAlign('justify').run()
+                  editor.chain().setTextAlign('justify').run()
                 }}
                 className={editorState.isJustify ? 'is-active' : ''}
                 title="Blocksatz"
@@ -238,7 +230,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().undo().run()
+            editor.chain().undo().run()
           }}
           title="Rückgängig"
         >
@@ -248,7 +240,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().redo().run()
+            editor.chain().redo().run()
           }}
           title="Wiederherstellen"
         >
@@ -261,7 +253,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().focus().unsetAllMarks().run()
+            editor.chain().unsetAllMarks().run()
           }}
           title="Formatierung entfernen"
         >
