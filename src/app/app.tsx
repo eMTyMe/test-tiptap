@@ -42,14 +42,12 @@ export default () => {
     pluginKey.current = generateRandomString(5)
   }
   
-	function onContentOrStyleUpdate({editor}) {
-    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
-  }
-  
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
-    onUpdate: onContentOrStyleUpdate,
+    onUpdate({ editor }) {
+      triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
+    },
     onFocus({ editor, event }) {
     	triggerEvent({type: 'focus', componentId: id})
   	},
@@ -58,14 +56,6 @@ export default () => {
   	},
     content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
-
-  /**
-   * Hide the menu programmatically.
-   */
-	function hideMenu() {
-    if (!editor?.commandManager) return
-    editor.commands.setMeta(pluginKey, 'hide')
-  }
 
   useEffect(() => {
     if (!editor) {
@@ -83,20 +73,10 @@ export default () => {
   if (componentData.content) {
    	editor.commands.setContent(componentData.content) 
   }
-
-	function onMouseUp(e) {
-    if (!editor?.commandManager) return
-    if (!e.target.closest('.bubble-menu, .tiptap')) {
-      hideMenu()
-    }
-  }
-  
-	window.addEventListener('mouseup', onMouseUp);
-  window.addEventListener('beforeunload', () => window.removeEventListener('mouseup', onMouseUp))
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} onUpdate={onContentOrStyleUpdate} pluginKey={pluginKey} />}
+      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
