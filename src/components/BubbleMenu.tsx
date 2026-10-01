@@ -8,23 +8,11 @@ import { TbBackground } from "react-icons/tb";
 import { Divider } from './Divider.tsx'
 import { useState, useRef } from 'react'
 
-function generateRandomString(length) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charsLength = chars.length;
-  let randomString = Array.from({ length }, () => chars[Math.floor(Math.random() * charsLength)]);
-	return randomString.join('');
-}
-
-export function CustomBubbleMenu({ editor, onUpdate }: { editor: Editor | null, onUpdate: Function }) {
+export function CustomBubbleMenu({ editor, onUpdate, pluginKey }: { editor: Editor | null, onUpdate: Function, pluginKey: String }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
   })
-
-  const pluginKey = useRef(null)
-  if (pluginKey.current === null) {
-    pluginKey.current = generateRandomString(5)
-  }
   
   if (!editor) {
     return null
