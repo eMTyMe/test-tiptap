@@ -55,7 +55,7 @@ export default () => {
     	triggerEvent({type: 'focus', componentId: id})
   	},
   	onBlur: ({ editor, event }) => {
-    	//triggerEvent({type: 'blur', componentId: id})
+    	triggerEvent({type: 'blur', componentId: id})
   	},
     content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
