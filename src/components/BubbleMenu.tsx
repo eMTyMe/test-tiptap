@@ -53,13 +53,15 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
       }}
     >
       <div className="bubble-menu">
-        <button onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
+        <button type="button" onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
         <button
+          type="button"
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             const boldExecuted = editor.chain().focus().toggleBold().run()
             console.log('Bold command executed', boldExecuted)
-            triggerChangeEvent()
-            bla({editor})
+            //triggerChangeEvent()
+            //bla({editor})
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -67,6 +69,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <FaBold />
         </button>
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().toggleItalic().run()
             triggerChangeEvent()
@@ -78,6 +81,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <FaItalic />
         </button>
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().toggleStrike().run()
             triggerChangeEvent()
@@ -89,6 +93,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <FaStrikethrough />
         </button>
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().toggleUnderline().run()
             triggerChangeEvent()
@@ -151,6 +156,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         <Divider />
         
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().toggleBulletList().run()
             triggerChangeEvent()
@@ -161,6 +167,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <FaListUl />
         </button>
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().toggleOrderedList().run()
             triggerChangeEvent()
@@ -183,6 +190,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <ul>
             <li>
               <button
+                type="button"
               	onClick={() => {
                   editor.chain().focus().setTextAlign('left').run()
                   triggerChangeEvent()
@@ -195,6 +203,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             </li>
             <li>
               <button
+                type="button"
               	onClick={() => {
                   editor.chain().focus().setTextAlign('center').run()
                   triggerChangeEvent()
@@ -207,6 +216,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             </li>
             <li>
               <button
+                type="button"
               	onClick={() => {
                   editor.chain().focus().setTextAlign('right').run()
                   triggerChangeEvent()
@@ -219,6 +229,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             </li>
             <li>
               <button
+                type="button"
               	onClick={() => {
                   editor.chain().focus().setTextAlign('justify').run()
                   triggerChangeEvent()
@@ -235,6 +246,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         <Divider />
         
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().undo().run()
             triggerChangeEvent()
@@ -244,6 +256,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           <FaUndo />
         </button>
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().redo().run()
             triggerChangeEvent()
@@ -256,6 +269,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
 				<Divider />
         
         <button
+          type="button"
           onClick={() => {
             editor.chain().focus().unsetAllMarks().run()
             triggerChangeEvent()
@@ -265,6 +279,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
         	<FaRemoveFormat />
         </button>
         <button
+          type="button"
           onClick={() => editor.commands.toggleInvisibleCharacters()}
           title={editorState.invCharsVisible === true ? "Verstecke unsichtbare Zeichen" : "Zeige unsichtbare Zeichen" }
           className={editorState.invCharsVisible ? 'is-active' : ''}
