@@ -63,6 +63,7 @@ export default () => {
    * Hide the menu programmatically.
    */
 	function hideMenu() {
+    if (!editor?.commandManager) return
     editor.commands.setMeta(pluginKey, 'hide')
   }
 
@@ -84,7 +85,7 @@ export default () => {
   }
 
 	function onMouseUp(e) {
-    if (!editor?.commandManager) return;
+    if (!editor?.commandManager) return
     if (!e.target.closest('.bubble-menu, .tiptap')) {
       hideMenu()
     }
