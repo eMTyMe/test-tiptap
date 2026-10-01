@@ -58,8 +58,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            const boldExecuted = editor.chain().focus().toggleBold().run()
-            console.log('Bold command executed', boldExecuted)
+            editor.chain().focus().toggleBold().run()
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -110,8 +109,9 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             max={64}
             value={ Number.isNaN(parseInt(editorState.fontSize)) ? 12 : parseInt(editorState.fontSize) }
             onChange={e => {
-              const value = e.target.value
+              const value = Math.max(Math.min(e.target.value, 64), 8)
               if (!value) return
+              if (value !== e.target.value) e.target.value = value
               editor.chain().setFontSize(`${value}px`).run()
             } }
           />
@@ -125,7 +125,6 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             type="color"
             id="color-picker"
             onChange={e => {
-              editor.chain().focus().run()
               editor.chain().setColor(e.target.value).run()
             }}
             title="Textfarbe"
@@ -138,7 +137,6 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, bla }: { edit
             type="color"
             id="bg-color-picker"
             onChange={e => {
-              editor.chain().focus().run()
               editor.chain().setBackgroundColor(e.target.value).run()
             }}
             title="Hintergrundfarbe"
