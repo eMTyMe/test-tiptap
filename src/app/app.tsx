@@ -75,6 +75,14 @@ export default () => {
   if (componentData.content) {
    	editor.commands.setContent(componentData.content) 
   }
+
+	window.addEventListener('mouseup', e => {
+    console.log('mouseup');
+    if (!e.target.closest('.bubble-menu, .tiptap')) {
+      console.log('close menu');
+      editor.commands.setMeta(pluginKey, 'hide')
+    }
+  });
   
   return (
     <>
