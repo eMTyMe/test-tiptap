@@ -23,7 +23,11 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
 
   // trigger change event when formatting changes
 	function triggerChangeEvent() {
+    console.log('json', editor.getJSON())
+    console.log('text', editor.getText())
+    console.log('componentId', componentId)
     triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId})
+    console.log('SHOULD HAVE TRIGGERED')
   }
   
   return (
