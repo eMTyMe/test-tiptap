@@ -19,9 +19,15 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
     return null
   }
 
-	const updatedForCurrentOpen = useRef(false);
+	const updatedForCurrentOpen = useRef(false)
 
-	triggerEvent({type: 'menu ready'})
+	function onAnyChange() {
+    console.log('json', editor.getJSON())
+    console.log('text', editor.getText())
+    console.log('componentId', componentId)
+    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId})
+    console.log('SHOULD HAVE TRIGGERED')
+  }
   
   return (
     <BubbleMenu
@@ -50,7 +56,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleBold().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
@@ -60,7 +66,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleItalic().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
@@ -70,7 +76,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleStrike().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
@@ -80,7 +86,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleUnderline().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
@@ -101,7 +107,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
               const value = e.target.value
               if (!value) return
               editor.chain().focus().setFontSize(`${value}px`).run()
-              triggerChangeEvent({editor})
+              onAnyChange()
             } }
           />
         </div>
@@ -115,7 +121,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
             id="color-picker"
             onChange={e => {
               editor.chain().focus().setColor(e.target.value).run()
-              triggerChangeEvent({editor})
+              onAnyChange()
             }}
             title="Textfarbe"
           />
@@ -128,7 +134,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
             id="bg-color-picker"
             onChange={e => {
               editor.chain().focus().setBackgroundColor(e.target.value).run()
-              triggerChangeEvent({editor})
+              onAnyChange()
             }}
             title="Hintergrundfarbe"
           />
@@ -139,7 +145,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleBulletList().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isBulletList ? 'is-active' : ''}
           title="Unsortierte Aufszählung"
@@ -149,7 +155,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().toggleOrderedList().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           className={editorState.isOrderedList ? 'is-active' : ''}
           title="Sortierte Aufzählung"
@@ -171,7 +177,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('left').run()
-                  triggerChangeEvent({editor})
+                  onAnyChange()
                 }}
                 className={editorState.isLeft ? 'is-active' : ''}
                 title="Linksbündig ausrichten"
@@ -183,7 +189,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('center').run()
-                  triggerChangeEvent({editor})
+                  onAnyChange()
                 }}
                 className={editorState.isCenter ? 'is-active' : ''}
                 title="Zentriert"
@@ -195,7 +201,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('right').run()
-                  triggerChangeEvent({editor})
+                  onAnyChange()
                 }}
                 className={editorState.isRight ? 'is-active' : ''}
                 title="Rechtsbündig ausrichten"
@@ -207,7 +213,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
               <button
               	onClick={() => {
                   editor.chain().focus().setTextAlign('justify').run()
-                  triggerChangeEvent({editor})
+                  onAnyChange()
                 }}
                 className={editorState.isJustify ? 'is-active' : ''}
                 title="Blocksatz"
@@ -223,7 +229,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().undo().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           title="Rückgängig"
         >
@@ -232,7 +238,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().redo().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           title="Wiederherstellen"
         >
@@ -244,7 +250,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, triggerChange
         <button
           onClick={() => {
             editor.chain().focus().unsetAllMarks().run()
-            triggerChangeEvent({editor})
+            onAnyChange()
           }}
           title="Formatierung entfernen"
         >
