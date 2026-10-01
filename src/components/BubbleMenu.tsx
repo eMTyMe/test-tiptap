@@ -50,7 +50,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             editor.commands.focus()
-            setTimeout(() => editor.chain().toggleBold().run(), 0)
+            setTimeout(() => editor.chain().toggleBold().run(), 10)
           }}
           className={editorState.isBold ? 'is-active' : ''}
           title="Fett"
