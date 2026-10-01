@@ -61,7 +61,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().toggleItalic().run()
+            editor.commands.focus()
+            setTimeout(() => editor.chain().toggleItalic().run(), 10)
           }}
           className={editorState.isItalic ? 'is-active' : ''}
           title="Kursiv"
@@ -72,7 +73,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().toggleStrike().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().toggleStrike().run(), 10)
           }}
           className={editorState.isStrike ? 'is-active' : ''}
           title="Durchgestrichen"
@@ -83,7 +85,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().toggleUnderline().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().toggleUnderline().run(), 10)
           }}
           className={editorState.isUnderline ? 'is-active' : ''}
           title="Unterstrichen"
@@ -141,7 +144,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().toggleBulletList().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().toggleBulletList().run(), 10)
           }}
           className={editorState.isBulletList ? 'is-active' : ''}
           title="Unsortierte Aufszählung"
@@ -151,7 +155,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
         <button
           type="button"
           onClick={() => {
-            editor.chain().toggleOrderedList().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().toggleOrderedList().run(), 10)
           }}
           className={editorState.isOrderedList ? 'is-active' : ''}
           title="Sortierte Aufzählung"
@@ -174,7 +179,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().setTextAlign('left').run()
+                  editor.commands.focus()
+                  setTimeout( () => editor.chain().setTextAlign('left').run(), 10)
                 }}
                 className={editorState.isLeft ? 'is-active' : ''}
                 title="Linksbündig ausrichten"
@@ -187,7 +193,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().setTextAlign('center').run()
+                  editor.commands.focus()
+                  setTimeout( () => editor.chain().setTextAlign('center').run(), 10)
                 }}
                 className={editorState.isCenter ? 'is-active' : ''}
                 title="Zentriert"
@@ -200,7 +207,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().setTextAlign('right').run()
+                  editor.commands.focus()
+                  setTimeout( () => editor.chain().setTextAlign('right').run(), 10)
                 }}
                 className={editorState.isRight ? 'is-active' : ''}
                 title="Rechtsbündig ausrichten"
@@ -213,7 +221,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
               	onClick={() => {
-                  editor.chain().setTextAlign('justify').run()
+                  editor.commands.focus()
+                  setTimeout( () => editor.chain().setTextAlign('justify').run(), 10)
                 }}
                 className={editorState.isJustify ? 'is-active' : ''}
                 title="Blocksatz"
@@ -230,7 +239,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().undo().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().undo().run(), 10)
           }}
           title="Rückgängig"
         >
@@ -240,7 +250,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().redo().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().redo().run(), 10)
           }}
           title="Wiederherstellen"
         >
@@ -253,7 +264,8 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
-            editor.chain().unsetAllMarks().run()
+            editor.commands.focus()
+            setTimeout( () => editor.chain().unsetAllMarks().run(), 10)
           }}
           title="Formatierung entfernen"
         >
@@ -261,7 +273,11 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
         </button>
         <button
           type="button"
-          onClick={() => editor.commands.toggleInvisibleCharacters()}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => {
+            editor.commands.focus()
+            setTimeout( () => editor.commands.toggleInvisibleCharacters(), 10)
+          }}
           title={editorState.invCharsVisible === true ? "Verstecke unsichtbare Zeichen" : "Zeige unsichtbare Zeichen" }
           className={editorState.invCharsVisible ? 'is-active' : ''}
         >
