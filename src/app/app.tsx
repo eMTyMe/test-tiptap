@@ -41,16 +41,13 @@ export default () => {
 	if (pluginKey.current === null) {
     pluginKey.current = generateRandomString(5)
   }
-
-	function bla({editor}) {
-    console.log('trigger app')
-    triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})
-  }
   
   const editor = useEditor({
     extensions,
     editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
-    onUpdate: bla,
+    onUpdate: ({editor}) => {
+    	triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
+    },
     onFocus: ({ editor, event }) => {
     	triggerEvent({type: 'focus', componentId: id})
   	},
@@ -69,11 +66,13 @@ export default () => {
     	editor.setEditable(componentData.editable)
 
     if (typeof componentData.content === 'string') {
+      console.log('Updating content', componentData);
     	editor.commands.setContent(componentData.content)   
     }
   }, [editor, componentData])
 
   if (componentData.content) {
+    console.log('Setting start content', componentData);
    	editor.commands.setContent(componentData.content) 
   }
   
