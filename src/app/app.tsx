@@ -73,7 +73,7 @@ export default () => {
 
   if (componentData.content) {
     console.log('Setting start content', componentData);
-   	editor.commands.setContent(componentData.content) 
+   	editor.commands.setContent(componentData.content, { emitUpdate: false })
   }
   
   return (
