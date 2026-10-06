@@ -15,7 +15,7 @@ import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React, { useEffect, useRef } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
-import { useData, triggerEvent } from '@uibakery/data'
+import { useData, triggerEvent, useLoadAction } from '@uibakery/data'
 
 const extensions = [
   Document, Paragraph, Text,
@@ -34,14 +34,18 @@ function generateRandomString(length) {
 
 export default () => {
   console.log('START CUSTOM COMPONENT')
+
+	const pluginKey = useRef(null)
+  
+	if (pluginKey.current === null) {
+    pluginKey.current = generateRandomString(5)
+  }
+  
   let componentData = useData() || {};
   
 	const id = componentData.id;
 
-	const pluginKey = useRef(null)
-	if (pluginKey.current === null) {
-    pluginKey.current = generateRandomString(5)
-  }
+	const [products, isLoading, error, refreshProducts] = useLoadAction('newAction')
   
   const editor = useEditor({
     extensions,
@@ -67,15 +71,10 @@ export default () => {
     	editor.setEditable(componentData.editable)
 
     if (typeof componentData.content === 'string') {
-      console.log('Updating content', componentData);
+      console.log('setting content', componentData);
     	editor.commands.setContent(componentData.content)   
     }
   }, [editor, componentData])
-
-  if (componentData.content) {
-    console.log('Setting start content', componentData);
-   	editor.commands.setContent(componentData.content, { emitUpdate: false })
-  }
   
   return (
     <>
