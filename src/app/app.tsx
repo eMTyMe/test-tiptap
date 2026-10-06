@@ -33,6 +33,7 @@ function generateRandomString(length) {
 }
 
 export default () => {
+  console.log('START CUSTOM COMPONENT')
   let componentData = useData() || {};
   
 	const id = componentData.id;
