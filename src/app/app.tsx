@@ -13,7 +13,7 @@ import { BulletList, OrderedList, ListItem } from '@tiptap/extension-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
 import { useData, triggerEvent, useLoadAction, useUser, useApplication } from '@uibakery/data'
 
@@ -40,9 +40,11 @@ export default () => {
 	if (pluginKey.current === null) {
     pluginKey.current = generateRandomString(5)
   }
+
+	const [fallbackId] = useState(() => generateRandomString(5))
   
   const content = useData('content', '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>')
-  const id = useData('id', generateRandomString(5))
+  const id = useData('id', fallbackId)
   const editable = useData('editable', true)
   
   const editor = useEditor({
@@ -59,19 +61,16 @@ export default () => {
   	},
     content: content
   })
-
-  editor.commands.setContent(content, {emitUpdate: false})
-  editor.setEditable(editable)
   
-	/* useEffect(() => {
+	useEffect(() => {
     console.log("useEffect content")
-    editor.commands.setContent(content, {emitUpdate: false}) 
+    editor.commands.setContent(content, {emitUpdate: false});
   }, [editor, content])
 
   useEffect(() => {
     console.log("useEffect editable")
-    editor.setEditable(editable)
-  }, [editor, editable]) */
+    editor.setEditable(editable, false)
+  }, [editor, editable])
   
   return (
     <>
