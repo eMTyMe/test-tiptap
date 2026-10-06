@@ -15,7 +15,7 @@ import { UndoRedo } from '@tiptap/extensions'
 import InvisibleCharacters from '@tiptap/extension-invisible-characters'
 import React, { useEffect, useRef } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
-import { useData, triggerEvent, useLoadAction } from '@uibakery/data'
+import { useData, triggerEvent, useLoadAction, useUser, useApplication } from '@uibakery/data'
 
 const extensions = [
   Document, Paragraph, Text,
@@ -34,22 +34,21 @@ function generateRandomString(length) {
 
 export default () => {
   console.log('START CUSTOM COMPONENT')
-
+  
 	const pluginKey = useRef(null)
   
 	if (pluginKey.current === null) {
     pluginKey.current = generateRandomString(5)
   }
   
-  let componentData = useData() || {};
-  
-	const id = componentData.id
-
-	const [products, isLoading, error, refreshProducts] = useLoadAction('newAction')
+  //let componentData = useData() || {};
+  const content = useData('content', '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>')
+  const id = useData('id', generateRandomString(5))
+  const editable = useData('editable', true)
   
   const editor = useEditor({
     extensions,
-    editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
+    editable,
     onUpdate: ({editor}) => {
     	triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
     },
@@ -59,27 +58,22 @@ export default () => {
   	onBlur: ({ editor, event }) => {
     	triggerEvent({type: 'blur', componentId: id})
   	},
-    content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
+    content: content
   })
 
-  useEffect(() => {
-    console.log('USEEFFECT');
-    if (!editor) {
-      return undefined
-    }
-    
-    if (typeof componentData.editable === 'boolean') 
-    	editor.setEditable(componentData.editable)
+	useEffect(() => {
+    console.log("useEffect content")
+    editor.commands.setContent(content)   
+  }, [editor, content])
 
-    if (typeof componentData.content === 'string') {
-      console.log('setting content', componentData);
-    	editor.commands.setContent(componentData.content)   
-    }
-  }, [componentData])
+  useEffect(() => {
+    console.log("useEffect editable")
+    editor.setEditable(editable)
+  }, [editor, editable])
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
