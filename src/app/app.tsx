@@ -61,15 +61,15 @@ export default () => {
     content: content
   })
 
-	useEffect(() => {
+	/* useEffect(() => {
     console.log("useEffect content")
-    editor.commands.setContent(content)   
+    editor.commands.setContent(content, {emitUpdate: false}) 
   }, [editor, content])
 
   useEffect(() => {
     console.log("useEffect editable")
     editor.setEditable(editable)
-  }, [editor, editable])
+  }, [editor, editable]) */
   
   return (
     <>
