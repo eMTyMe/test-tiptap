@@ -41,7 +41,6 @@ export default () => {
     pluginKey.current = generateRandomString(5)
   }
   
-  //let componentData = useData() || {};
   const content = useData('content', '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>')
   const id = useData('id', generateRandomString(5))
   const editable = useData('editable', true)
