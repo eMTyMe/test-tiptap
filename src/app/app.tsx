@@ -60,6 +60,9 @@ export default () => {
     content: content
   })
 
+  editor.commands.setContent(content, {emitUpdate: false})
+  editor.setEditable(editable)
+  
 	/* useEffect(() => {
     console.log("useEffect content")
     editor.commands.setContent(content, {emitUpdate: false}) 
