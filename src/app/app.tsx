@@ -41,15 +41,15 @@ export default () => {
     pluginKey.current = generateRandomString(5)
   }
   
-  let componentData = useData() || {};
+  //let componentData = useData() || {};
   
-	const id = componentData.id;
+	const id = /* componentData.id */generateRandomString(5);
 
 	const [products, isLoading, error, refreshProducts] = useLoadAction('newAction')
   
   const editor = useEditor({
     extensions,
-    editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
+    //editable: typeof componentData.editable === 'boolean' ? componentData.editable : true,
     onUpdate: ({editor}) => {
     	triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
     },
@@ -59,10 +59,10 @@ export default () => {
   	onBlur: ({ editor, event }) => {
     	triggerEvent({type: 'blur', componentId: id})
   	},
-    content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
+    content: /*componentData.content ||*/ '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!editor) {
       return undefined
     }
@@ -74,11 +74,11 @@ export default () => {
       console.log('setting content', componentData);
     	editor.commands.setContent(componentData.content)   
     }
-  }, [editor, componentData])
+  }, [editor, componentData]) */
   
   return (
     <>
-      {componentData.editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {/* componentData.editable === false || */ <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
