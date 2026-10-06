@@ -62,7 +62,8 @@ export default () => {
     content: componentData.content || '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>'
   })
 
-  /*useEffect(() => {
+  useEffect(() => {
+    console.log('USEEFFECT');
     if (!editor) {
       return undefined
     }
@@ -74,7 +75,7 @@ export default () => {
       console.log('setting content', componentData);
     	editor.commands.setContent(componentData.content)   
     }
-  }, [editor, componentData])*/
+  }, [componentData])
   
   return (
     <>
