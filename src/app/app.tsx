@@ -41,33 +41,44 @@ export default () => {
 	const hideMenu = useData('hideMenu', false)
   const disableStyles = useData('disableStyles', false)
 
-	useEffect(() => {
-    console.log('useEffect styles')
-		let extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
+	let extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
+  if (!disableStyles) {
+   	extensions.push(
+     	Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+  		FontSize, TextAlign.configure({types: ['paragraph']}),
+  		BulletList, OrderedList, ListItem
+	 	)
+  }
+	
+  const editor = useEditor({
+   	extensions,
+   	content,
+   	editable,
+   	onUpdate: ({editor}) => {
+   		triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
+   	},
+   	onFocus: ({ editor, event }) => {
+	   	triggerEvent({type: 'focus', componentId: id})
+  	},
+  	onBlur: ({ editor, event }) => {
+   		triggerEvent({type: 'blur', componentId: id})
+  	},
+  })
 
-  	if (!disableStyles) {
-    	extensions.push(
-      	Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+	useEffect(() => {
+    console.log("useEffect disableStyles")
+    if (disableStyles) {
+      extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
+    } else {
+			extensions = [
+        Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false}),
+        Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
   			FontSize, TextAlign.configure({types: ['paragraph']}),
   			BulletList, OrderedList, ListItem
-	  	)
-  	}
-		  
-  	const editor = useEditor({
-    	extensions,
-    	content,
-    	editable,
-    	onUpdate: ({editor}) => {
-    		triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
-    	},
-    	onFocus: ({ editor, event }) => {
-	    	triggerEvent({type: 'focus', componentId: id})
-  		},
-  		onBlur: ({ editor, event }) => {
-    		triggerEvent({type: 'blur', componentId: id})
-  		},
-  	})
-  }, [disableStyles])
+      ]
+    }
+    editor.setOptions({ extensions })
+  }, [editor, disableStyles])
   
 	useEffect(() => {
     console.log("useEffect content")
