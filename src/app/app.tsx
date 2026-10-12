@@ -69,8 +69,7 @@ export default () => {
     console.log("useEffect disableStyles", disableStyles)
     if (disableStyles) {
       extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
-      const resp = editor.commands.unsetAllMarks()
-      console.log('resp', resp)
+      editor.chain().selectAll().unsetAllMarks().deleteSelection().run()
     } else {
 			extensions = [
         Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false}),
