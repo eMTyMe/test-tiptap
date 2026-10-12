@@ -17,14 +17,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CustomBubbleMenu } from '../components/BubbleMenu.tsx'
 import { useData, triggerEvent, useLoadAction, useUser, useApplication } from '@uibakery/data'
 
-const extensions = [
-  Document, Paragraph, Text,
-  Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
-  FontSize, TextAlign.configure({types: ['paragraph']}),
-  BulletList, OrderedList, ListItem,
-  UndoRedo, InvisibleCharacters.configure({visible: false})
-]
-
 function generateRandomString(length) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charsLength = chars.length;
@@ -46,9 +38,26 @@ export default () => {
   const content = useData('content', '<p><span style="color: rgb(240, 5, 5);">FORMAZIONE </span><strong>IN <em>MATERIA</em></strong><em> DI</em> SALUTE <span style="font-size: 16px;">E <em>SICUREZZA </em>SUL</span> <span style="background-color: rgb(239, 11, 11);">LAVORO</span></p>')
   const id = useData('id', fallbackId)
   const editable = useData('editable', true)
+	const hideMenu = useData('hideMenu', false)
+  const disableStyles = useData('disableStyles', false)
+
+  
+	let extensions = [
+  	Document, Paragraph, Text
+	]
+
+  if (!disableStyles) {
+    extensions.push(
+      Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+  		FontSize, TextAlign.configure({types: ['paragraph']}),
+  		BulletList, OrderedList, ListItem,
+  		UndoRedo, InvisibleCharacters.configure({visible: false})
+  	)
+  }
   
   const editor = useEditor({
     extensions,
+    content,
     editable,
     onUpdate: ({editor}) => {
     	triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
@@ -59,7 +68,6 @@ export default () => {
   	onBlur: ({ editor, event }) => {
     	triggerEvent({type: 'blur', componentId: id})
   	},
-    content: content
   })
   
 	useEffect(() => {
@@ -74,7 +82,7 @@ export default () => {
   
   return (
     <>
-      {editable === false || <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {editable && hideMenu === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
