@@ -66,7 +66,7 @@ export default () => {
   })
 
 	useEffect(() => {
-    console.log("useEffect disableStyles")
+    console.log("useEffect disableStyles", disableStyles)
     if (disableStyles) {
       extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
       editor.commands.unsetAllMarks()
@@ -83,7 +83,7 @@ export default () => {
   
 	useEffect(() => {
     console.log("useEffect content")
-    editor.commands.setContent(content, {emitUpdate: false});
+    editor.commands.setContent(content, {emitUpdate: false})
   }, [editor, content])
 
   useEffect(() => {
