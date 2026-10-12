@@ -69,7 +69,8 @@ export default () => {
     console.log("useEffect disableStyles", disableStyles)
     if (disableStyles) {
       extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
-      editor.commands.unsetAllMarks()
+      const resp = editor.commands.unsetAllMarks()
+      console.log('resp', resp)
     } else {
 			extensions = [
         Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false}),
@@ -78,7 +79,7 @@ export default () => {
   			BulletList, OrderedList, ListItem
       ]
     }
-    editor.setOptions({ extensions })
+    //editor.setOptions({ extensions })
   }, [editor, disableStyles])
   
 	useEffect(() => {
