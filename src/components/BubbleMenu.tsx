@@ -44,7 +44,11 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles
       }}
     >
       <div className="bubble-menu">
-        <button type="button" onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
+        <button type="button" onClick={() => {
+      		console.log('html', editor.getHTML())
+      		console.log('json', editor.getJSON())
+      		console.log('text', editor.getText())
+    		}}>CLICK ME</button>
         {!disableStyles && <>
         <button
           type="button"

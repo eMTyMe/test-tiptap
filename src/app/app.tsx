@@ -85,7 +85,7 @@ export default () => {
   			BulletList, OrderedList, ListItem
       ]
     }
-    //editor.setOptions({ extensions })
+    editor.setOptions({ extensions })
   }, [editor, disableStyles])
   
 	useEffect(() => {
