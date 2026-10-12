@@ -41,34 +41,33 @@ export default () => {
 	const hideMenu = useData('hideMenu', false)
   const disableStyles = useData('disableStyles', false)
 
-  
-	let extensions = [
-  	Document, Paragraph, Text
-	]
+	useEffect(() => {
+    console.log('useEffect styles')
+		let extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
 
-  if (!disableStyles) {
-    extensions.push(
-      Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
-  		FontSize, TextAlign.configure({types: ['paragraph']}),
-  		BulletList, OrderedList, ListItem,
-  		UndoRedo, InvisibleCharacters.configure({visible: false})
-  	)
-  }
-  
-  const editor = useEditor({
-    extensions,
-    content,
-    editable,
-    onUpdate: ({editor}) => {
-    	triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
-    },
-    onFocus: ({ editor, event }) => {
-    	triggerEvent({type: 'focus', componentId: id})
-  	},
-  	onBlur: ({ editor, event }) => {
-    	triggerEvent({type: 'blur', componentId: id})
-  	},
-  })
+  	if (!disableStyles) {
+    	extensions.push(
+      	Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
+  			FontSize, TextAlign.configure({types: ['paragraph']}),
+  			BulletList, OrderedList, ListItem
+	  	)
+  	}
+		  
+  	const editor = useEditor({
+    	extensions,
+    	content,
+    	editable,
+    	onUpdate: ({editor}) => {
+    		triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
+    	},
+    	onFocus: ({ editor, event }) => {
+	    	triggerEvent({type: 'focus', componentId: id})
+  		},
+  		onBlur: ({ editor, event }) => {
+    		triggerEvent({type: 'blur', componentId: id})
+  		},
+  	})
+  }, [disableStyles])
   
 	useEffect(() => {
     console.log("useEffect content")
@@ -82,7 +81,7 @@ export default () => {
   
   return (
     <>
-      {editable && hideMenu === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {editable && hideMenu === false && disableStyles === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
       <EditorContent editor={editor} />
     </>
   )
