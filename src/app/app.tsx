@@ -49,13 +49,19 @@ export default () => {
   		BulletList, OrderedList, ListItem
 	 	)
   }
-	
+
+	let updateTimeout
+  
   const editor = useEditor({
    	extensions,
    	content,
    	editable,
    	onUpdate: ({editor}) => {
-   		triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
+      if (updateTimeout) clearTimeout(updateTimeout)
+      setTimeout(() => {
+   			triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
+        updateTimeout = null;
+      }, 50)
    	},
    	onFocus: ({ editor, event }) => {
 	   	triggerEvent({type: 'focus', componentId: id})
