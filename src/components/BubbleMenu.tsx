@@ -9,7 +9,7 @@ import { Divider } from './Divider.tsx'
 import { useState, useRef } from 'react'
 import { triggerEvent } from '@uibakery/data'
 
-export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: Editor | null, pluginKey: String, componentId: String }) {
+export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles }: { editor: Editor | null, pluginKey: String, componentId: String, disableStyles: Boolean }) {
 	const editorState = useEditorState({
     editor,
     selector: menuStateSelector,
@@ -45,6 +45,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
     >
       <div className="bubble-menu">
         <button type="button" onClick={() => {console.log('html', editor.getHTML()); console.log('json', editor.getJSON()); console.log('text', editor.getText())}}>CLICK ME</button>
+        {!disableStyles && <>
         <button
           type="button"
           onMouseDown={(event) => event.preventDefault()}
@@ -234,6 +235,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId }: { editor: E
         </details>
         
         <Divider />
+        </>}
         
         <button
           type="button"

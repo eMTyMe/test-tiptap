@@ -69,6 +69,7 @@ export default () => {
     console.log("useEffect disableStyles")
     if (disableStyles) {
       extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
+      editor.commands.unsetAllMarks()
     } else {
 			extensions = [
         Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false}),
@@ -92,7 +93,7 @@ export default () => {
   
   return (
     <>
-      {editable && hideMenu === false && disableStyles === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} />}
+      {editable && hideMenu === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} disableStyles={disableStyles} />}
       <EditorContent editor={editor} />
     </>
   )
