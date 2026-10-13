@@ -79,7 +79,7 @@ export default () => {
       }
       blurTimeout.current = setTimeout(() => {
         editor.commands.setMeta(pluginKey, 'hide')
-      })
+      }, 500)
   	},
   })
   
