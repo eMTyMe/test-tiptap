@@ -61,7 +61,7 @@ export default () => {
       setTimeout(() => {
    			triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
         updateTimeout = null;
-      }, 50)
+      }, 350)
    	},
    	onFocus: ({ editor, event }) => {
 	   	triggerEvent({type: 'focus', componentId: id})
@@ -70,7 +70,7 @@ export default () => {
    		triggerEvent({type: 'blur', componentId: id})
   	},
   })
-
+  
 	useEffect(() => {
     console.log("useEffect disableStyles", disableStyles)
     if (disableStyles) {
