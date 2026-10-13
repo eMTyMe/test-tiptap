@@ -45,6 +45,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles
     >
       <div className="bubble-menu">
         <button type="button" onClick={() => {
+      		console.log(editor.extensionManager.extensions.map(extension => extension.name))
       		console.log('html', editor.getHTML())
       		console.log('json', editor.getJSON())
       		console.log('text', editor.getText())
@@ -266,7 +267,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles
 
 				<Divider />
         
-        <button
+        {!disableStyles && <button
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
@@ -276,7 +277,7 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles
           title="Formatierung entfernen"
         >
         	<FaRemoveFormat />
-        </button>
+        </button>}
         <button
           type="button"
           onMouseDown={(event) => event.preventDefault()}
