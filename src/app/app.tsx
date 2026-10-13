@@ -49,7 +49,6 @@ const DisableEnter = Extension.create({
 });
 
 export default () => {
-  console.log('START CUSTOM COMPONENT')
   
 	const pluginKey = useRef(null)
 	if (pluginKey.current === null) {
