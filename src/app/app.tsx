@@ -50,17 +50,17 @@ export default () => {
 	 	)
   }
 
-	let updateTimeout
+	let updateTimeout = useRef(null)
   
   const editor = useEditor({
    	extensions,
    	content,
    	editable,
    	onUpdate: ({editor}) => {
-      if (updateTimeout) clearTimeout(updateTimeout)
-      setTimeout(() => {
+      if (updateTimeout.current) clearTimeout(updateTimeout.current)
+      updateTimeout.current = setTimeout(() => {
    			triggerEvent({type: 'change', json: editor.getJSON(), text: editor.getText(), componentId: id})  
-        updateTimeout = null;
+        updateTimeout.current = null;
       }, 350)
    	},
    	onFocus: ({ editor, event }) => {
