@@ -18,8 +18,6 @@ export function CustomBubbleMenu({ editor, pluginKey, componentId, disableStyles
   if (!editor) {
     return null
   }
-
-	const updatedForCurrentOpen = useRef(false)
   
   return (
     <BubbleMenu

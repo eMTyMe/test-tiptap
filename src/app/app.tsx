@@ -50,7 +50,8 @@ export default () => {
 	 	)
   }
 
-	let updateTimeout = useRef(null)
+	const updateTimeout = useRef(null)
+  const blurTimeout = useRef(null)
   
   const editor = useEditor({
    	extensions,
@@ -65,26 +66,26 @@ export default () => {
    	},
    	onFocus: ({ editor, event }) => {
 	   	triggerEvent({type: 'focus', componentId: id})
+      if (blurTimeout.current) {
+        clearTimeout(blurTimeout.current)
+        blurTimeout.current = null
+      }
   	},
   	onBlur: ({ editor, event }) => {
    		triggerEvent({type: 'blur', componentId: id})
+      if (blurTimeout.current) {
+        clearTimeout(blurTimeout.current)
+        blurTimeout.current = null
+      }
+      blurTimeout.current = setTimeout(() => {
+        editor.commands.setMeta(pluginKey, 'hide')
+      }, 500)
   	},
   })
   
 	useEffect(() => {
     console.log("useEffect disableStyles", disableStyles)
-    if (disableStyles) {
-      extensions = [Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false})]
-      editor.chain().selectAll().unsetAllMarks().blur().run()
-    } else {
-			extensions = [
-        Document, Paragraph, Text, UndoRedo, InvisibleCharacters.configure({visible: false}),
-        Bold, Italic, Strike, Underline, TextStyle, Color, BackgroundColor,
-  			FontSize, TextAlign.configure({types: ['paragraph']}),
-  			BulletList, OrderedList, ListItem
-      ]
-    }
-    editor.setOptions({ extensions })
+    if (disableStyles) editor.chain().selectAll().unsetAllMarks().blur().run()
   }, [editor, disableStyles])
   
 	useEffect(() => {
