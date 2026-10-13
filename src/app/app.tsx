@@ -78,7 +78,8 @@ export default () => {
         blurTimeout.current = null
       }
       blurTimeout.current = setTimeout(() => {
-        editor.commands.setMeta(pluginKey, 'hide')
+        console.log('hiding the menu nowww')
+        editor.commands.setMeta(pluginKey.current, 'hide')
       }, 500)
   	},
   })
