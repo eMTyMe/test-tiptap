@@ -48,7 +48,11 @@ const DisableEnter = Extension.create({
   },
 });
 
+//setInterval(() => console.log(document, document.activeElement), 200)
+
 export default () => {
+
+	const editorElem = useRef(null)
   
 	const pluginKey = useRef(null)
 	if (pluginKey.current === null) {
@@ -73,7 +77,6 @@ export default () => {
   ]
 
 	const updateTimeout = useRef(null)
-  const hideMenuTimeout = useRef(null)
   
   const editor = useEditor({
    	extensions,
@@ -89,24 +92,9 @@ export default () => {
    	},
    	onFocus: ({ editor, event }) => {
 	   	triggerEvent({type: 'focus', componentId: id})
-
-      // cancel the timeout since the editor is focused again
-      if (hideMenuTimeout.current) {
-        clearTimeout(hideMenuTimeout.current)
-        hideMenuTimeout.current = null
-      }
   	},
   	onBlur: ({ editor, event }) => {
    		triggerEvent({type: 'blur', componentId: id})
-
-      // hide the custom bubble menu after a timeout, because it still shows when focusing a different editor instance leading to multiple menus on the page
-      if (hideMenuTimeout.current) {
-        clearTimeout(hideMenuTimeout.current)
-        hideMenuTimeout.current = null
-      }
-      hideMenuTimeout.current = setTimeout(() => {
-        editor.commands.setMeta(pluginKey.current, 'hide')
-      }, 300)
   	},
   })
 
@@ -131,11 +119,19 @@ export default () => {
   useEffect(() => {
     editor.setEditable(editable, false)
   }, [editor, editable])
+
+  // close the bubble menu when focus is neither on the editor nor the bubble menu
+	window.addEventListener('mousedown', e => {
+    const bubbleMenu = document.querySelector('.bubble-menu');
+    if ( (!bubbleMenu || !bubbleMenu.contains(e.target)) && !editorElem.current.contains(e.target) ) {
+			editor.commands.setMeta(pluginKey.current, 'hide')
+    }
+  });
   
   return (
     <>
       {editable && hideMenu === false && <CustomBubbleMenu editor={editor} pluginKey={pluginKey} componentId={id} disableStyles={disableStyles} />}
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} ref={editorElem} />
     </>
   )
 }
